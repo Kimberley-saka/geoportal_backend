@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import MyTokenObtainPairView
+from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import GetUserView, CreateUserView, ResetPasswordView
+from .views import GetUserView, CreateUserView
+from .views import MyTokenObtainPairView
 
 
 urlpatterns =[
@@ -9,5 +10,9 @@ urlpatterns =[
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/', GetUserView.as_view()),
     path('create/', CreateUserView.as_view()),
-    path('password_reset/', ResetPasswordView.as_view(), name='password_reset'),
+    path('accounts/password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('accounts/password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('accounts/password_reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+]
 ]

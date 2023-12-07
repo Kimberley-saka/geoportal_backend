@@ -68,32 +68,5 @@ class GetUserView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ResetPasswordView(APIView):
-    """
-    reset password
-    """
-
-    def post(self, request):
-        """
-        __reset password
-        """
-        email = request.data.get('email')
-        password1 = request.data.get('password1')
-        password2 = request.data.get('password2')
-
-        if email is None or not isinstance(email, str):
-            return Response('Invalid email', status=status.HTTP_400_BAD_REQUEST)
-
-        if not UserModel.objects.filter(email=email).exists():
-            return Response({'detail: User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        
-        if password1 != password2:
-            return Response({'detail': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = UserModel.objects.get(email=email)
-        user.set_password(password1)
-        user.save()
-
-        return Response({'detail': 'Password reset successful'}, status=status.HTTP_200_OK)
 
         
