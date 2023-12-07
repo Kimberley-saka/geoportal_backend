@@ -17,25 +17,21 @@ class CreateUserView(APIView):
 
         if email is None or not isinstance(email, str):
             return Response('Invalid email', status=status.HTTP_400_BAD_REQUEST)
+   
         if UserModel.objects.filter(email=email).exists():
-            return Response('detail: User with that email already exists',
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail: User already exists'}, status=status.HTTP_409_CONFLICT)
         
-         
-        new_user_data = {'email': email, **request.data}
-        new_user = UserSerializer(data=new_user_data)
-        new_user = UserSerializer(data=new_user_data)
-        
-        if new_user.is_valid(raise_exception=True):
+        new_user = UserSerializer(data=request.data) 
+        if new_user.is_valid(raise_exception=True): #check if data passed is valid
             new_user.save()
         
-        return Response(new_user.data)
-        
-
-
+        return Response(new_user.data, status=status.HTTP_201_CREATED)
+            
+    
+    
 class GetUserView(APIView):
     """
-    get user if ther exist
+    get user if the exist
     """
     def get(self, request):
         email = request.data.get('email')
