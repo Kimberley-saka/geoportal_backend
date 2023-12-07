@@ -57,4 +57,8 @@ class UserModel(AbstractBaseUser):
 
     def __str__(self) -> str:
         return self.first_name + self.last_name
+    
+
+    class Meta:
+        db_table = 'users'
 
