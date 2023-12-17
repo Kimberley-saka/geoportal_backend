@@ -58,6 +58,15 @@ class UserModel(AbstractBaseUser):
     def __str__(self) -> str:
         return self.first_name + self.last_name
     
+    
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        return True
+    
 
     class Meta:
         db_table = 'users'
