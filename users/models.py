@@ -42,8 +42,8 @@ class UserModel(AbstractBaseUser):
     User model
     """
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
     password = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -53,10 +53,10 @@ class UserModel(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['firstName', 'lastName']
 
     def __str__(self) -> str:
-        return self.first_name + self.last_name
+        return self.firstName + self.lastName
     
     
     def has_perm(self, perm, obj=None):

@@ -19,8 +19,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # Add custom claims
-        token['first_name'] = user.first_name
-        token['last_name'] = user.last_name
+        token['firstName'] = user.firstName
+        token['lastName'] = user.lastName
 
         return token
 
@@ -46,12 +46,12 @@ class CreateUserView(APIView):
         if UserModel.objects.filter(email=email).exists():
             return Response({'detail: User already exists'}, status=status.HTTP_409_CONFLICT)
         
-        new_user = UserSerializer(data=request.data) 
-        if new_user.is_valid(raise_exception=True): #check if data passed is valid
+        new_user = UserSerializer(data=request.data)
+        if new_user.is_valid():
             new_user.save()
-        
-        return Response(new_user.data, status=status.HTTP_201_CREATED)
-            
+            return Response(new_user.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(new_user.errors, status=status.HTTP_400_BAD_REQUEST)  
     
     
 class GetUserView(APIView):
