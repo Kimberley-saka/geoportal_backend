@@ -1,7 +1,9 @@
 import json
-import psycopg2
+import psycopg
+import tempfile
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
+from osgeo import ogr
 
 
 
@@ -17,12 +19,15 @@ class getGeospatialData(APIView):
 
         search_param = request.data.get('search')
 
-        connection = psycopg2.connect(
+        connection = psycopg.connect(
             dbname='geoportal',
             user='postgres',
             password='postgres',
             host='localhost',
             port='5432'
         )
+
+
+        tmpfile = 
 
       
