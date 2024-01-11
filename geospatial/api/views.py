@@ -6,20 +6,20 @@ from rest_framework.response import Response
 
 class getGeoData(APIView):
     def get(self, request, *args, **kwargs):
-        search_term = request.data.get('searchTerm')
+        search_term = request.query_params.get('searchTerm')
 
         geoserver_url = 'http://localhost:8090/geoserver/rest/workspaces/shapefiles/datastores/geoportal/featuretypes'
         response = requests.get(geoserver_url)
         if response.status_code == 200:
-            shapefile_info = response.json()
-        
+            try:
+                shapefile_info = response.json()
+                return Response(shapefile_info, status=status.HTTP_200_OK)
+            except json.JSONDecodeError:
+                return Response({"error": "Invalid JSON received"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response({'detail: data not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": f"Received status code {response.status_code}"})
 
-        for feature_type in shapefile_info['featureTypes']:
-            if feature_type['name'] == search_term:
-                download_url = feature_type['links'][1]['href']
-                break
+        
         
         
         shapefile_data = requests.get(download_url).content
