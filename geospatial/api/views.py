@@ -8,7 +8,7 @@ class getGeoData(APIView):
     def get(self, request, *args, **kwargs):
         search_term = request.query_params.get('searchTerm')
 
-        geoserver_url = 'http://localhost:8090/geoserver/rest/workspaces/shapefiles/datastores/geoportal/featuretypes'
+        geoserver_url = 'http://localhost:8090/geoserver/rest/workspaces/shapefiles/datastores/shapefiles/featuretypes'
         response = requests.get(geoserver_url)
         if response.status_code == 200:
             try:
