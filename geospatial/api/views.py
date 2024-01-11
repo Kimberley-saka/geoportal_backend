@@ -8,7 +8,7 @@ class getGeoData(APIView):
     def get(self, request, *args, **kwargs):
         search_term = request.data.get('searchTerm')
 
-        geoserver_url = 'url'
+        geoserver_url = 'localhost:8080/geoserver/rest/workspaces/shapefiles/datastores/shapefiles/featuretypes'
         response = requests.get(geoserver_url)
         shapefile_info = response.json()
 
