@@ -10,6 +10,7 @@ class Users(AbstractUser):
 
 
     REQUIRED_FIELDS = ['email', 'password']
+    USERNAME_FIELD = 'email'
 
     class Meta:
         """meta data"""
