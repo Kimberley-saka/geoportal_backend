@@ -4,7 +4,7 @@ from django.db import models
 
 class Users(AbstractUser):
     """
-    User
+    User model
     """
     password = models.CharField(max_length=250, null=False)
 
